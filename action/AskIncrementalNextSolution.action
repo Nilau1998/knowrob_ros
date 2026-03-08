@@ -1,4 +1,4 @@
-uint32 queryId
+uint32 query_id
 ---
 byte FALSE = 0
 byte TRUE = 1

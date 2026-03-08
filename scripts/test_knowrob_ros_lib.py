@@ -99,7 +99,7 @@ class TestKnowrobRosLib(unittest.TestCase):
             get_default_modalframe()
         )
         self.assertEqual(start.status, AskIncrementalResult.TRUE)
-        query_id = start.queryId
+        query_id = start.query_id
         self.assertGreater(query_id, 0)
 
         # Retrieve next (first) solution

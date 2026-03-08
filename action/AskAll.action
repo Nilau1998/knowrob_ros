@@ -7,4 +7,4 @@ byte QUERY_FAILED = 2
 GraphAnswerMessage[] answers
 byte status
 ---
-uint32 numberOfSolutions
+uint32 number_of_solutions

@@ -99,7 +99,7 @@ class KnowRobRosLib:
             AskOneResult
         """
         goal = AskOneGoal()
-        goal.query.queryString = query
+        goal.query.query_string = query
         goal.query.frame = modal_frame
         goal.query.lang = lang
 
@@ -115,7 +115,7 @@ class KnowRobRosLib:
             AskAllResult
         """
         goal = AskAllGoal()
-        goal.query.queryString = query
+        goal.query.query_string = query
         goal.query.frame = modal_frame
         goal.query.lang = lang
 
@@ -132,7 +132,7 @@ class KnowRobRosLib:
             AskIncrementalResult
         """
         goal = AskIncrementalGoal()
-        goal.query.queryString = query
+        goal.query.query_string = query
         goal.query.frame = modal_frame
         goal.query.lang = lang
 
@@ -151,7 +151,7 @@ class KnowRobRosLib:
             AskIncrementalNextSolutionResult
         """
         goal = AskIncrementalNextSolutionGoal()
-        goal.queryId = query_id
+        goal.query_id = query_id
 
         self._ask_incremental_next_client.send_goal(goal)
         self._ask_incremental_next_client.wait_for_result()
@@ -198,10 +198,10 @@ def get_default_modalframe():
         ModalFrame
     """
     modal_frame = ModalFrame()
-    modal_frame.epistemicOperator = ModalFrame.KNOWLEDGE
-    modal_frame.temporalOperator = ModalFrame.CURRENTLY
-    modal_frame.minPastTimestamp = ModalFrame.UNSPECIFIED_TIMESTAMP
-    modal_frame.maxPastTimestamp = ModalFrame.UNSPECIFIED_TIMESTAMP
+    modal_frame.epistemic_operator = ModalFrame.KNOWLEDGE
+    modal_frame.temporal_operator = ModalFrame.CURRENTLY
+    modal_frame.min_past_timestamp = ModalFrame.UNSPECIFIED_TIMESTAMP
+    modal_frame.max_past_timestamp = ModalFrame.UNSPECIFIED_TIMESTAMP
     modal_frame.confidence = 0.0
     return modal_frame
 

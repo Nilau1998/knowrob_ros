@@ -5,6 +5,6 @@ byte TRUE = 1
 byte QUERY_FAILED = 2
 
 bool status
-uint32 queryId
+uint32 query_id
 ---
 bool finished

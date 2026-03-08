@@ -1,5 +1,5 @@
 KeyValuePair[] substitution
 string instantiation
 float64 confidence
-float64 startTimestamp
-float64 endTimestamp
+float64 start_timestamp
+float64 end_timestamp

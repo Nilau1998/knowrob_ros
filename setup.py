@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
+# NOTE: This package uses ament_cmake (see package.xml).
+# Python module installation is handled via CMakeLists.txt.
+# This file is intentionally left minimal to avoid confusing
+# colcon's package identification.
 
-from os.path import dirname, abspath, basename
-from distutils.core import setup
-from catkin_pkg.python_setup import generate_distutils_setup
-
-setup_args = generate_distutils_setup(
-    packages=[basename(dirname(abspath(__file__)))],
-    package_dir={'': 'src'},
-)
-
-setup(**setup_args)
+from setuptools import setup
+setup()

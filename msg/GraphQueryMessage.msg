@@ -9,7 +9,7 @@ string lang # Default: LANG_FOL
 # in this message.
 # The query must by valid expression in the language configured
 # via the "lang" field.
-string queryString
+string query_string
 
 # Determines the modal frame in which the triple is assumed to be true.
 ModalFrame frame

@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
 
-source /catkin_ws/devel/setup.bash
-roslaunch knowrob_ros knowrob.launch
+source /opt/ros/jazzy/setup.bash
+source /ros2_ws/install/setup.bash
+ros2 run knowrob_ros knowrob_ros_node "$@"
