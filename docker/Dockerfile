@@ -32,6 +32,9 @@ RUN git clone https://github.com/knowrob/knowrob.git . && \
     cmake .. -DCATKIN=OFF -DPYTHON_MODULE_LIBDIR="dist-packages" && \
     make -j"$(nproc)" && \
     make install && \
+    mkdir -p /usr/local/share/knowrob/storage/mongo/aggregation && \
+    cp /tmp/knowrob/src/storage/mongo/aggregation/*.json /usr/local/share/knowrob/storage/mongo/aggregation/ && \
+    if [ ! -e /usr/local/share/owl ]; then ln -s /usr/local/share/knowrob/owl /usr/local/share/owl; fi && \
     ldconfig && \
     rm -rf /tmp/knowrob
 
@@ -46,8 +49,10 @@ RUN source /opt/ros/jazzy/setup.bash && \
     colcon build --symlink-install
 
 # Copy startup scripts into the image
-COPY run_knowrob.sh /ros2_ws/run_knowrob.sh
-COPY run_knowrob_local.sh /ros2_ws/run_knowrob_local.sh
-COPY run_knowrob_test.sh /ros2_ws/run_knowrob_test.sh
+COPY docker/run_knowrob_local.sh /ros2_ws/run_knowrob_local.sh
+COPY docker/run_knowrob_test.sh /ros2_ws/run_knowrob_test.sh
+COPY docker/knowrob_config.json /config/knowrob_config.json
 
-ENTRYPOINT ["./run_knowrob_local.sh"]
+WORKDIR /usr/local/share/knowrob
+
+ENTRYPOINT ["/ros2_ws/run_knowrob_local.sh"]

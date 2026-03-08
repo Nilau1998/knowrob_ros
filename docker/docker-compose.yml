@@ -1,0 +1,36 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: knowrob-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  knowrob_ros:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: knowrob/ros2
+    container_name: knowrob-ros2
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      KNOWROB_SETTINGS: /config/knowrob_config.json
+    volumes:
+      - ./knowrob_config.json:/config/knowrob_config.json:ro
+      - ../tests:/ros2_ws/src/knowrob_ros/tests:ro
+    command: []
+    stdin_open: true
+    tty: true
+
+volumes:
+  mongo_data:

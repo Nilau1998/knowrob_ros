@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t knowrob/ros2 .
+docker build -f docker/Dockerfile -t knowrob/ros2 .

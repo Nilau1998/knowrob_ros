@@ -12,10 +12,36 @@
 #include <knowrob/formulas/ModalFormula.h>
 #include <knowrob/terms/ListTerm.h>
 #include <boost/any.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include <cstdlib>
+#include <string>
 
 using namespace std::placeholders;
 using namespace knowrob_ros;
 using namespace knowrob;
+
+namespace {
+
+std::string resolveKnowRobSettingsPath(int argc, char** argv) {
+  for (int i = 1; i < argc; ++i) {
+    const std::string arg(argv[i]);
+    if (arg == "--knowrob-settings" && i + 1 < argc) {
+      return std::string(argv[i + 1]);
+    }
+    const std::string prefix = "--knowrob-settings=";
+    if (arg.rfind(prefix, 0) == 0) {
+      return arg.substr(prefix.size());
+    }
+  }
+
+  const char* env_path = std::getenv("KNOWROB_SETTINGS");
+  if (env_path != nullptr && env_path[0] != '\0') {
+    return std::string(env_path);
+  }
+  return "";
+}
+
+}  // namespace
 
 ROSInterface::ROSInterface(const boost::property_tree::ptree& config)
     : Node("knowrob_node"), kb_(KnowledgeBase::create(config)) {
@@ -390,11 +416,29 @@ void ROSInterface::handle_export_triples(
 }
 
 int main(int argc, char** argv) {
-  rclcpp::init(argc, argv);
-
+  const std::string settings_path = resolveKnowRobSettingsPath(argc, argv);
   boost::property_tree::ptree config;
-  // TODO: optionally load config from a file/parameter
+  if (!settings_path.empty()) {
+    try {
+      boost::property_tree::read_json(settings_path, config);
+    } catch (const std::exception& ex) {
+      std::cerr << "Failed to load KnowRob settings from '" << settings_path
+                << "': " << ex.what() << std::endl;
+      return 2;
+    }
+  }
+
+  rclcpp::init(argc, argv);
   auto node = std::make_shared<knowrob_ros::ROSInterface>(config);
+  if (!settings_path.empty()) {
+    RCLCPP_INFO(node->get_logger(), "Loaded KnowRob settings from: %s",
+                settings_path.c_str());
+  } else {
+    RCLCPP_WARN(node->get_logger(),
+                "No KnowRob settings file configured. Starting with empty "
+                "configuration.");
+  }
+
   rclcpp::spin(node);
   rclcpp::shutdown();
   return 0;

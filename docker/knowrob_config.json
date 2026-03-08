@@ -1,0 +1,48 @@
+{
+  "logging": {
+    "console-sink": {
+      "level": "debug"
+    },
+    "file-sink": {
+      "path": "log/knowrob.log",
+      "level": "debug"
+    }
+  },
+  "semantic-web": {
+    "prefixes": [
+      {
+        "alias": "lpn",
+        "uri": "http://knowrob.org/kb/lpn"
+      }
+    ]
+  },
+  "data-sources": [
+    {
+      "path": "/ros2_ws/src/knowrob_ros/tests/owl/lpn.owl",
+      "format": "turtle"
+    }
+  ],
+  "data-backends": [
+    {
+      "type": "MongoDB",
+      "name": "mongodb",
+      "host": "mongo",
+      "port": 27017,
+      "db": "test",
+      "read-only": false
+    }
+  ],
+  "reasoner": [
+    {
+      "name": "mongolog_reasoner",
+      "type": "Mongolog",
+      "data-backend": "mongodb",
+      "imports": [
+        {
+          "path": "/ros2_ws/src/knowrob_ros/tests/prolog/mongolog_lpn.pl",
+          "format": "prolog"
+        }
+      ]
+    }
+  ]
+}

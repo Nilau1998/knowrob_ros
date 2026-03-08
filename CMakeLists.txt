@@ -86,17 +86,6 @@ install(
   DESTINATION lib/${PROJECT_NAME}
 )
 
-# ——— Python scripts (installation) —————————
-# Installs all executables in scripts/ into the package share directory
-install(
-  DIRECTORY scripts
-  DESTINATION share/${PROJECT_NAME}/scripts
-  FILES_MATCHING PATTERN "*.py"
-  PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
-              GROUP_READ GROUP_EXECUTE
-              WORLD_READ WORLD_EXECUTE
-)
-
 # ——— Testing (optional) ——————————————
 if (BUILD_TESTING)
   find_package(Python3 REQUIRED COMPONENTS Interpreter)
@@ -109,7 +98,7 @@ if (BUILD_TESTING)
 
   add_test(
     NAME test_knowrob_ros_lib
-    COMMAND /usr/bin/env bash -lc "source ${ROS_SETUP_SCRIPT} && ${Python3_EXECUTABLE} -m pytest ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test_knowrob_ros_lib.py"
+    COMMAND /usr/bin/env bash -lc "source ${ROS_SETUP_SCRIPT} && ${Python3_EXECUTABLE} -m pytest ${CMAKE_CURRENT_SOURCE_DIR}/test/test_knowrob_ros_lib.py"
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
   )
   set_tests_properties(test_knowrob_ros_lib PROPERTIES TIMEOUT 120)

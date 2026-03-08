@@ -50,25 +50,35 @@ If you'd like to avoid setting up everything locally, you can use the provided D
 From the root of the repository:
 
 ```bash
-docker build -t knowrob/ros1 .
+docker build -t knowrob/ros2 .
 ```
 
-### 2. Run the Container
+### 2. Run the compose file
 
 ```bash
-docker run -it --entrypoint bash knowrob/ros1
-```
-
-### 3. Launch KnowRob in Docker
-
-Once inside the container:
-
-```bash
-source /catkin_ws/devel/setup.bash
-roslaunch knowrob_ros knowrob.launch
+docker compose -f docker/docker-compose.yml up --build
 ```
 
 ## Usage
+
+### ROS2: Passing a KnowRob configuration file
+
+The ROS2 node (`knowrob_ros_node`) can load KnowRob settings JSON at startup.
+
+- Preferred CLI flag:
+
+```bash
+ros2 run knowrob_ros knowrob_ros_node --knowrob-settings /path/to/settings.json
+```
+
+- Or via environment variable:
+
+```bash
+export KNOWROB_SETTINGS=/path/to/settings.json
+ros2 run knowrob_ros knowrob_ros_node
+```
+
+If both are provided, `--knowrob-settings` takes precedence.
 
 ### ROS Interfaces
 
@@ -165,11 +175,10 @@ The `ModalFrame` message controls **who** “knows” what, and **when** it’s 
 ├── include/           ← C++ interface headers
 ├── launch/            ← Launch files
 ├── msg/               ← Custom ROS messages
-├── scripts/           ← Python test scripts
 ├── src/               ← Core Prolog, C++ and Python code
 │   └── knowrob_ros_lib/ ← Python client library
 ├── srv/               ← ROS services
-├── test/              ← rostest definitions
+├── test/              ← unittests
 ├── Dockerfile         ← Container setup
 ├── build-docker.sh    ← Helper for Docker builds
 ├── CMakeLists.txt
@@ -180,8 +189,8 @@ The `ModalFrame` message controls **who** “knows” what, and **when** it’s 
 ## Contributing
 
 1. Fork the repo and create a branch  
-2. Write or update tests in `scripts/` or `test/`  
-3. Follow ROS and Python style guidelines  
+2. Write or update tests in `test/`  
+3. Follow ROS2 and Python style guidelines  
 4. Submit a pull request  
 
 ## Support
