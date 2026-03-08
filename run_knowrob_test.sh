@@ -4,4 +4,4 @@ set -e
 source /opt/ros/jazzy/setup.bash
 source /ros2_ws/install/setup.bash
 
-ros2 run knowrob_ros knowrob_ros_node "$@"
+colcon test --packages-select knowrob_ros --event-handlers console_direct+

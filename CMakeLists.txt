@@ -99,9 +99,20 @@ install(
 
 # ——— Testing (optional) ——————————————
 if (BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  ament_lint_auto_find_test_dependencies()
-  # e.g. ament_add_pytest_test(…)
+  find_package(Python3 REQUIRED COMPONENTS Interpreter)
+
+  if(DEFINED ENV{ROS_DISTRO} AND NOT "$ENV{ROS_DISTRO}" STREQUAL "")
+    set(ROS_SETUP_SCRIPT "/opt/ros/$ENV{ROS_DISTRO}/setup.bash")
+  else()
+    set(ROS_SETUP_SCRIPT "/opt/ros/jazzy/setup.bash")
+  endif()
+
+  add_test(
+    NAME test_knowrob_ros_lib
+    COMMAND /usr/bin/env bash -lc "source ${ROS_SETUP_SCRIPT} && ${Python3_EXECUTABLE} -m pytest ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test_knowrob_ros_lib.py"
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  )
+  set_tests_properties(test_knowrob_ros_lib PROPERTIES TIMEOUT 120)
 endif()
 
 # ——— ament package macro —————————————

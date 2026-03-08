@@ -46,9 +46,8 @@ RUN source /opt/ros/jazzy/setup.bash && \
     colcon build --symlink-install
 
 # Copy startup scripts into the image
-COPY run_knowrob.sh /run_knowrob.sh
-COPY run_knowrob_local.sh /run_knowrob_local.sh
-
-WORKDIR /
+COPY run_knowrob.sh /ros2_ws/run_knowrob.sh
+COPY run_knowrob_local.sh /ros2_ws/run_knowrob_local.sh
+COPY run_knowrob_test.sh /ros2_ws/run_knowrob_test.sh
 
 ENTRYPOINT ["./run_knowrob_local.sh"]
