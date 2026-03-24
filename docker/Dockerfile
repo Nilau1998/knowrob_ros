@@ -53,6 +53,9 @@ COPY docker/run_knowrob_local.sh /ros2_ws/run_knowrob_local.sh
 COPY docker/run_knowrob_test.sh /ros2_ws/run_knowrob_test.sh
 COPY docker/knowrob_config.json /config/knowrob_config.json
 
-WORKDIR /usr/local/share/knowrob
+# Copy OWL files into the image
+COPY owl/cmecs.owl /ros2_ws/owl/cmecs.owl
+
+WORKDIR /ros2_ws
 
 ENTRYPOINT ["/ros2_ws/run_knowrob_local.sh"]

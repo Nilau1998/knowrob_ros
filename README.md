@@ -1,6 +1,6 @@
 # knowrob_ros
 
-**knowrob_ros** is a ROS 1 wrapper for [KnowRob](https://github.com/knowrob/knowrob), providing ROS interfaces to integrate KnowRob's knowledge reasoning capabilities with robotic systems. 
+**knowrob_ros** is a ROS 2 wrapper for [KnowRob](https://github.com/knowrob/knowrob), providing ROS interfaces to integrate KnowRob's knowledge reasoning capabilities with robotic systems. 
 
 ## Key Features
 
@@ -12,34 +12,6 @@
   - Ready-to-use container for fast setup  
 
 ## Installation (Local ROS Workspace)
-
-### Prerequisites
-
-- Ubuntu 20.04
-- ROS Noetic
-
-For the rest, see the dependencies of [KnowRob](https://github.com/knowrob/knowrob).
-
-### 1. Clone the Repositories
-
-```bash
-mkdir -p ~/catkin_ws/src
-cd ~/catkin_ws/src
-
-# Clone KnowRob
-git clone https://github.com/knowrob/knowrob.git
-
-# Clone knowrob_ros (this repo)
-git clone https://github.com/knowrob/knowrob_ros.git
-```
-
-### 2. Build the workspace
-
-```bash
-cd ~/catkin_ws
-catkin build
-```
----
 
 ## Installation with Docker
 
@@ -166,25 +138,6 @@ The `ModalFrame` message controls **who** “knows” what, and **when** it’s 
 | `minPastTimestamp`    | `float`  | `UNSPECIFIED_TIMESTAMP (-1.0)`   | Lower time bound (seconds since epoch). When >0, only facts true *after* this timestamp are considered.                          |
 | `maxPastTimestamp`    | `float`  | `UNSPECIFIED_TIMESTAMP (-1.0)`   | Upper time bound (seconds since epoch). When >0, only facts true *before* this timestamp are considered.                         |
 | `confidence`          | `float`  | `0.0`                            | Minimum confidence threshold (0.0–1.0) for returned statements.                                                                   |
-
-## Repository Layout
-
-```
-.
-├── action/            ← ROS action definitions
-├── include/           ← C++ interface headers
-├── launch/            ← Launch files
-├── msg/               ← Custom ROS messages
-├── src/               ← Core Prolog, C++ and Python code
-│   └── knowrob_ros_lib/ ← Python client library
-├── srv/               ← ROS services
-├── test/              ← unittests
-├── Dockerfile         ← Container setup
-├── build-docker.sh    ← Helper for Docker builds
-├── CMakeLists.txt
-├── package.xml
-└── README.md
-```
 
 ## Contributing
 

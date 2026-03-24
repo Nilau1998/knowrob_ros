@@ -8,18 +8,11 @@
       "level": "debug"
     }
   },
-  "semantic-web": {
-    "prefixes": [
-      {
-        "alias": "lpn",
-        "uri": "http://knowrob.org/kb/lpn"
-      }
-    ]
-  },
   "data-sources": [
     {
-      "path": "/ros2_ws/src/knowrob_ros/tests/owl/lpn.owl",
-      "format": "turtle"
+      "path": "/ros2_ws/owl/cmecs.owl",
+      "language": "owl",
+      "format": "xml"
     }
   ],
   "data-backends": [
