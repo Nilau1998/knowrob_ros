@@ -1,5 +1,4 @@
 FROM ros:jazzy-ros-core-noble
-LABEL maintainer="Sascha Jongebloed <jongebloed@uni-bremen.de>"
 
 # Use bash for shell commands (to source setup.bash)
 SHELL ["/bin/bash", "-lc"]
